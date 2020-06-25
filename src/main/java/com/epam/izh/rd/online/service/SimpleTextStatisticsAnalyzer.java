@@ -4,8 +4,6 @@ import com.epam.izh.rd.online.helper.Direction;
 
 import java.util.*;
 
-import static java.util.Collections.*;
-
 /**
  * Совет:
  * Начните с реализации метода {@link SimpleTextStatisticsAnalyzer#getWords(String)}.
@@ -128,14 +126,11 @@ public class SimpleTextStatisticsAnalyzer implements TextStatisticsAnalyzer {
 
         List<String> listOfWords = getWords(text);
 
-        listOfWords.sort((o1, o2) -> {
-            if (direction == Direction.ASC) {
-                return o1.length() - o2.length();
-            } else if (direction == Direction.DESC) {
-                return - (o1.length() - o2.length());
-            }
-            return 0;
-        });
+        if (direction == Direction.ASC) {
+            listOfWords.sort(Comparator.comparingInt(String::length));
+        } else if (direction == Direction.DESC) {
+            listOfWords.sort(Comparator.comparingInt(String::length).reversed());
+        }
 
         return listOfWords;
     }
